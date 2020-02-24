@@ -15,19 +15,19 @@ meta:
 ## 文档特点
 
 <div style="min-height: 612px;">
-  <InstallBanner version="v1.17.x" updateCount="70"/>
+  <InstallBanner version="v1.17.x" updateCount="75"/>
 </div>
 
 参考此免费文档，98%以上的概率，您能够顺利完成 K8S 安装，极个别的问题可以到QQ群里免费答疑。
 
-同时，也许您还想：
-* 探究安装文档中每一个脚本的用途
-* 了解何规划自己的集群，并可以结合自己的实际情况对安装脚本做客户化定制
-* 了解快速落地 K8S 的最佳学习路径
+<Course courseId="477593" />
+<!-- 此课程配有直播视频讲解，点击此处可 [报名12元直播课程](https://ke.qq.com/course/477593?flowToken=1016935)
+* 讲解K8S集群规划
+* 以更加直观易于理解的形式讲解此安装过程
+* 介绍K8S学习路径
+* 报名学员如碰到安装问题，可获得远程协助
+> 第一次直播课已经于1月18日完成，现在 [报名]((https://ke.qq.com/course/477593?flowToken=1016935)) 可以随时看回看，如需要，还可在2月8日免费再听一次直播。 -->
 
-[报名直播课程-详细讲解此安装过程](https://ke.qq.com/course/477593?flowToken=1016935)
-
-也可以在此 [提出对直播课的要求](http://bbs.kuboard.cn/forum.php?mod=viewthread&tid=10)
 
 ## 配置要求
 
@@ -41,9 +41,8 @@ meta:
 
 <div> -->
 
-[【腾讯云】12.12云产品限时秒杀，爆款1核2G云服务器，99元/1年](https://cloud.tencent.com/act/cps/redirect?redirect=1052&cps_key=2ee6baa049659f4713ddc55a51314372&from=console)
+[【腾讯云】云产品采购季，助力行业复工。1核2G云服务器，首年99元](https://cloud.tencent.com/act/cps/redirect?redirect=1053&cps_key=2ee6baa049659f4713ddc55a51314372&from=console)
 
-<!-- [腾讯云限时1折秒杀](https://cloud.tencent.com/act/cps/redirect?redirect=1044&cps_key=2ee6baa049659f4713ddc55a51314372&from=console) -->
 
 <!-- [阿里云，双十二主会场，低至一折](https://www.aliyun.com/1212/2019/home?userCode=obezo3pg) -->
 
@@ -117,9 +116,9 @@ lscpu
 | 7.7         | <span style="font-size: 24px;">😄</span> | 已验证                              |
 | 7.6         | <span style="font-size: 24px;">😄</span> | 已验证                              |
 | 7.5         | <span style="font-size: 24px;">😞</span> | 已证实会出现 kubelet 无法启动的问题    |
-| 7.4         | <span style="font-size: 24px;">😞</span> | 同上                              |
-| 7.3         | <span style="font-size: 24px;">😞</span> | 同上                              |
-| 7.2         | <span style="font-size: 24px;">😞</span> | 同上                              |
+| 7.4         | <span style="font-size: 24px;">😞</span> | 已证实会出现 kubelet 无法启动的问题                              |
+| 7.3         | <span style="font-size: 24px;">😞</span> | 已证实会出现 kubelet 无法启动的问题                              |
+| 7.2         | <span style="font-size: 24px;">😞</span> | 已证实会出现 kubelet 无法启动的问题                              |
 
 </div>
   </grid-item>
@@ -182,21 +181,45 @@ default via 172.21.0.1 dev eth0
 <b-card>
 <b-tabs content-class="mt-3">
   <b-tab title="快速安装" active>
-**请将脚本最后的 1.17.0 替换成您需要的版本号，**
+
+**请将脚本最后的 1.17.2 替换成您需要的版本号，**
 <font color="red">脚本中间的 v1.17.x 不要替换</font>
 
+> docker hub 镜像请根据自己网络的情况任选一个
+> * 第四行为腾讯云 docker hub 镜像
+> * 第六行为DaoCloud docker hub 镜像
+> * 第八行为阿里云 docker hub 镜像
 ``` sh
 # 在 master 节点和 worker 节点都要执行
-# 最后一个参数 1.17.0 用于指定 kubenetes 版本，支持所有 1.17.x 版本的安装
-
-curl -sSL https://kuboard.cn/install-script/v1.17.x/install_kubelet.sh | sh -s 1.17.0
-
+# 最后一个参数 1.17.2 用于指定 kubenetes 版本，支持所有 1.17.x 版本的安装
+# 腾讯云 docker hub 镜像
+# export REGISTRY_MIRROR="https://mirror.ccs.tencentyun.com"
+# DaoCloud 镜像
+# export REGISTRY_MIRROR="http://f1361db2.m.daocloud.io"
+# 阿里云 docker hub 镜像
+export REGISTRY_MIRROR=https://registry.cn-hangzhou.aliyuncs.com
+curl -sSL https://kuboard.cn/install-script/v1.17.x/install_kubelet.sh | sh -s 1.17.2
 ```
 
   </b-tab>
   <b-tab title="手动安装">
 
-手动执行以下代码，结果与快速安装相同。<font color="red">***请将脚本第79行（已高亮）的 ${1} 替换成您需要的版本号，例如 1.17.0***</font>
+手动执行以下代码，结果与快速安装相同。<font color="red">***请将脚本第79行（已高亮）的 ${1} 替换成您需要的版本号，例如 1.17.2***</font>
+
+> docker hub 镜像请根据自己网络的情况任选一个
+> * 第四行为腾讯云 docker hub 镜像
+> * 第六行为DaoCloud docker hub 镜像
+> * 第八行为阿里云 docker hub 镜像
+``` sh
+# 在 master 节点和 worker 节点都要执行
+# 最后一个参数 1.17.2 用于指定 kubenetes 版本，支持所有 1.17.x 版本的安装
+# 腾讯云 docker hub 镜像
+# export REGISTRY_MIRROR="https://mirror.ccs.tencentyun.com"
+# DaoCloud 镜像
+# export REGISTRY_MIRROR="http://f1361db2.m.daocloud.io"
+# 阿里云 docker hub 镜像
+export REGISTRY_MIRROR=https://registry.cn-hangzhou.aliyuncs.com
+```
 
 <<< @/.vuepress/public/install-script/v1.17.x/install_kubelet.sh {79}
 
@@ -228,7 +251,7 @@ curl -sSL https://kuboard.cn/install-script/v1.17.x/install_kubelet.sh | sh -s 1
 <b-tabs content-class="mt-3">
   <b-tab title="快速初始化" active>
 
-**请将脚本最后的 1.17.0 替换成您需要的版本号，**
+**请将脚本最后的 1.17.2 替换成您需要的版本号，**
 <font color="red">脚本中间的 v1.17.x 不要替换</font>
 
 ``` sh {10}
@@ -241,13 +264,13 @@ export APISERVER_NAME=apiserver.demo
 # Kubernetes 容器组所在的网段，该网段安装完成后，由 kubernetes 创建，事先并不存在于您的物理网络中
 export POD_SUBNET=10.100.0.1/16
 echo "${MASTER_IP}    ${APISERVER_NAME}" >> /etc/hosts
-curl -sSL https://kuboard.cn/install-script/v1.17.x/init_master.sh | sh -s 1.17.0
+curl -sSL https://kuboard.cn/install-script/v1.17.x/init_master.sh | sh -s 1.17.2
 ```
 
   </b-tab>
   <b-tab title="手动初始化">
 
-手动执行以下代码，结果与快速初始化相同。<font color="red">***请将脚本第21行（已高亮）的 ${1} 替换成您需要的版本号，例如 1.17.0***</font>
+手动执行以下代码，结果与快速初始化相同。<font color="red">***请将脚本第21行（已高亮）的 ${1} 替换成您需要的版本号，例如 1.17.2***</font>
 
 ``` sh
 # 只在 master 节点执行
@@ -516,12 +539,14 @@ kubectl delete -f https://kuboard.cn/install-script/v1.17.x/nginx-ingress.yaml
 
 您已经完成了 Kubernetes 集群的安装，下一步请：
 
-[报名直播课程-详细讲解此安装过程](https://ke.qq.com/course/477593?flowToken=1016934) 也可以在此 [提出对直播课的要求](http://bbs.kuboard.cn/forum.php?mod=viewthread&tid=10)
+<Course courseId="477593" />
 
-<span v-on:click="$sendGaEvent('安装后求GitHub Star','安装后求GitHub Star','安装后求GitHub Star')"><a href="https://github.com/eip-work/kuboard-press" target="_blank">点击此处，给个GitHub Star</a></span>
-支持一下吧，<StarCount></StarCount>这么多人都 star 了呢，怎么能少得了您呢？
+<!-- <span v-on:click="$sendGaEvent('安装后求GitHub Star','安装后求GitHub Star','安装后求GitHub Star')"><a href="https://github.com/eip-work/kuboard-press" target="_blank">点击此处，给个GitHub Star</a></span>
+支持一下吧，<StarCount></StarCount>这么多人都 star 了呢，怎么能少得了您呢？ -->
 
 [安装 Kuboard - 微服务管理界面](/install/install-dashboard.html)
+
+[使用 GitHub/GitLab 账号登录 Kubernetes](/learning/k8s-advanced/sec/authenticate/install.html)
 
 [获取 Kubernetes 免费教程](/learning/)
 

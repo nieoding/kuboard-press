@@ -35,27 +35,42 @@ Kuboard 是 Kubernetes 的一款图形化管理界面。
 
 | Kubernetes 版本 | Kuboard 版本   | 兼容性 | 说明                                                         |
 | --------------- | -------------- | ------ | ------------------------------------------------------------ |
-| v1.17           | v1.0 | <span style="font-size: 24px;">😄</span>      | 已验证                            |
-| v1.16           | v1.0 | <span style="font-size: 24px;">😄</span>      | 已验证                            |
-| v1.15           | v1.0 | <span style="font-size: 24px;">😄</span>      | 已验证                            |
-| v1.14           | v1.0 | <span style="font-size: 24px;">😄</span>      | 已验证                            |
-| v1.13           | v1.0 | <span style="font-size: 24px;">😄</span>      | 已验证                       |
-| v1.12           | v1.0 | <span style="font-size: 24px;">😐</span>      | Kubernetes Api v1.12 不支持 dryRun，<br />忽略Kuboard在执行命令时的参数校验错误，可正常工作 |
-| v1.11           | v1.0 | <span style="font-size: 24px;">😐</span>      | 同上                                                         |
+| v1.17           | v1.0.x | <span style="font-size: 24px;">😄</span>      | 已验证                            |
+| v1.16           | v1.0.x | <span style="font-size: 24px;">😄</span>      | 已验证                            |
+| v1.15           | v1.0.x | <span style="font-size: 24px;">😄</span>      | 已验证                            |
+| v1.14           | v1.0.x | <span style="font-size: 24px;">😄</span>      | 已验证                            |
+| v1.13           | v1.0.x | <span style="font-size: 24px;">😄</span>      | 已验证                       |
+| v1.12           | v1.0.x | <span style="font-size: 24px;">😐</span>      | Kubernetes Api v1.12 不支持 dryRun，<br />Kuboard 不支持 Kubernetes v1.12 |
+| v1.11           | v1.0.x | <span style="font-size: 24px;">😐</span>      | Kuboard 不支持 Kubernetes v1.11                                                         |
 ## 安装
 
 
 <b-card>
 <b-tabs content-class="mt-3">
-  <b-tab title="安装" active>
+<b-tab title="安装" active>
 
 安装 Kuboard。
 
 > 如果您参考 https://kuboard.cn 网站上提供的 Kubernetes 安装文档，可在 master 节点上执行以下命令。
 
+<b-tabs content-class="mt-3">
+<b-tab title="稳定版">
+
 ``` sh
 kubectl apply -f https://kuboard.cn/install-script/kuboard.yaml
+kubectl apply -f https://addons.kuboard.cn/metrics-server/0.3.6/metrics-server.yaml
 ```
+
+</b-tab>
+<b-tab title="Beta版">
+
+``` sh
+kubectl apply -f https://kuboard.cn/install-script/kuboard-beta.yaml
+kubectl apply -f https://addons.kuboard.cn/metrics-server/0.3.6/metrics-server.yaml
+```
+
+</b-tab>
+</b-tabs>
 
 查看 Kuboard 运行状态：
 
@@ -70,16 +85,17 @@ kuboard-54c9c4f6cb-6lf88   1/1     Running       0          45s
 ```
 > 如果您一直不能看到 kuboard 处于 Running 状态，可参考 [诊断应用程序](/learning/k8s-advanced/ts/application.html)，查找原因。如不能解决，请到本文页尾加群，联系群主解决。
 
-  </b-tab>
-  <b-tab title="卸载">
+</b-tab>
+<b-tab title="卸载">
 
 卸载 Kuboard
 
 ``` sh
 kubectl delete -f https://kuboard.cn/install-script/kuboard.yaml
+kubectl delete -f https://addons.kuboard.cn/metrics-server/0.3.6/metrics-server.yaml
 ```
 
-  </b-tab>
+</b-tab>
 </b-tabs>
 </b-card>
 
@@ -87,7 +103,9 @@ kubectl delete -f https://kuboard.cn/install-script/kuboard.yaml
 
 您可以获得管理员用户、只读用户的Token。
 
-> Kuboard 有计划开发权限设置的功能，在这之前，如果您需要更细粒度的权限控制，请参考 [RBAC Example](/learning/k8s-advanced/sec/rbac/example.html)
+> * 默认情况下，您可以使用 ServiceAccount 的 Token 登录 Kuboard
+> * 您还可以 [使用 GitLab/GitHub 账号登录 Kuboard/Kubectl](/learning/k8s-advanced/sec/authenticate/install.html)
+> * 您也可以 [为用户授权](/learning/k8s-advanced/sec/kuboard.html)
 
 <b-card>
 <b-tabs content-class="mt-3">
@@ -198,7 +216,7 @@ kubectl port-forward service/kuboard 8080:80 -n kube-system
 如需要无登录访问集群概览页面，可使用如下格式的 url 进入：
 
 ```
-http://任意一个Worker节点的IP地址:32567/#/dashboard?k8sToken=yourtoken
+http://任意一个Worker节点的IP地址:32567/dashboard?k8sToken=yourtoken
 ```
 
 ::: tip 其他界面
@@ -209,7 +227,7 @@ http://任意一个Worker节点的IP地址:32567/#/dashboard?k8sToken=yourtoken
 
 如果想要无登录直接访问容器组的控制台，可使用如下格式的 url 进入：
 ```
-http://任意一个Worker节点的IP地址:32567/#/console/yournamespace/yourpod?containerName=yourcontainer&shell=bash&k8sToken=yourtoken
+http://任意一个Worker节点的IP地址:32567/console/yournamespace/yourpod?containerName=yourcontainer&shell=bash&k8sToken=yourtoken
 ```
 
 其中，shell 参数可选取值有：
@@ -220,7 +238,11 @@ http://任意一个Worker节点的IP地址:32567/#/console/yournamespace/yourpod
 
 :tada: :tada: :tada:
 
+- 了解 [Kuboard 的环境变量](./install-kuboard-env.html)
+
 - 使用 Kuboard 工作负载编辑器 [创建第一个应用](/guide/example/busybox.html) （10分钟）
+
+- [使用 GitHub/GitLab 账号登录 Kubernetes](/learning/k8s-advanced/sec/authenticate/install.html)
 
 - 尝试 Kuboard 设计的其他 example [使用 Kuboard](/guide/index.html)
 - 学习 [Kubernetes免费教程](/learning/)

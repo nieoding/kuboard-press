@@ -38,6 +38,7 @@ module.exports = {
         'install-kubernetes',
         'sealos/',
         'install-node-port-range',
+        'docker-mirror',
         'k8s-restart',
       ]
     },
@@ -48,8 +49,15 @@ module.exports = {
         'install-dashboard',
         'install-dashboard-offline',
         'install-dashboard-upgrade',
-        'install-kubectl',
-        'config-kubectl',
+        {
+          title: 'kubectl',
+          collapsable: true,
+          children: [
+            'install-kubectl',
+            'config-kubectl',
+            'install-kubectl-sa',
+          ]
+        },
         'install-k8s-dashboard',
       ]
     },
@@ -397,14 +405,28 @@ module.exports = {
           title: '安全',
           collapsable: true,
           children: [
-            'k8s-advanced/sec/sa-admin',
-            'k8s-advanced/sec/rbac/api',
-            'k8s-advanced/sec/rbac/default',
-            'k8s-advanced/sec/rbac/escalation',
-            'k8s-advanced/sec/rbac/cmd',
-            'k8s-advanced/sec/rbac/sa',
-            'k8s-advanced/sec/rbac/permissive',
-            'k8s-advanced/sec/rbac/example',
+            {
+              title: '用户认证',
+              collapsable: true,
+              children: [
+                'k8s-advanced/sec/authenticate/',
+                'k8s-advanced/sec/sa-admin',
+                'k8s-advanced/sec/authenticate/install',
+              ]
+            }, {
+              title: '用户授权',
+              collapsable: true,
+              children: [
+                'k8s-advanced/sec/kuboard',
+                'k8s-advanced/sec/rbac/api',
+                'k8s-advanced/sec/rbac/default',
+                'k8s-advanced/sec/rbac/escalation',
+                'k8s-advanced/sec/rbac/cmd',
+                'k8s-advanced/sec/rbac/sa',
+                'k8s-advanced/sec/rbac/permissive',
+                'k8s-advanced/sec/rbac/example',
+              ]
+            },
           ]
         },
         {

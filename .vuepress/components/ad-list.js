@@ -5,7 +5,14 @@ module.exports = [
     strong: '一键离线安装',
     action: '去看看',
     url: 'https://github.com/fanux/sealos',
-    weight: 10
+    weight: 60
+  },
+  {
+    name: 'Suveng',
+    description: '趣丸网络科技 Suveng 免费提供的视频课',
+    strong: '免费学习',
+    url: 'https://www.bilibili.com/video/av88798402',
+    weight: 60,
   },
   // {
   //   name: '阳明的博客',
@@ -25,10 +32,10 @@ module.exports = [
   // },
   {
     name: '腾讯云',
-    description: '腾讯云双十二活动，',
-    strong: '百款云产品一折起',
+    description: '【腾讯云】云产品采购季，助力行业复工。',
+    strong: '1核2G云服务器，首年99元',
     action: '去抢',
-    url: 'https://cloud.tencent.com/act/cps/redirect?redirect=1052&cps_key=2ee6baa049659f4713ddc55a51314372&from=console',
+    url: 'https://cloud.tencent.com/act/cps/redirect?redirect=1053&cps_key=2ee6baa049659f4713ddc55a51314372&from=console',
     weight: 60
   },
   // {
@@ -41,20 +48,20 @@ module.exports = [
   // },
   {
     name: 'Kubetrain',
-    description: 'K8S在线直播培训，首次开班优惠',
+    description: 'K8S在线直播培训，内推机会',
     strong: '不满意可无条件退款',
     action: '现在就去',
     url: 'https://kubetrain.cn/?from=kuboard-ads',
     weight: 60
   },
-  {
-    name: '10元直播课',
-    description: 'Kubernetes集群安装详解，安装脚本定制',
-    strong: '入门起点',
-    action: '捧个场',
-    url: 'https://ke.qq.com/course/477593?flowToken=1016937',
-    weight: 60
-  }
+  // {
+  //   name: '12元直播课',
+  //   description: 'Kubernetes集群安装详解，安装脚本定制',
+  //   strong: '入门起点',
+  //   action: '捧个场',
+  //   url: 'https://ke.qq.com/course/477593?flowToken=1016937',
+  //   weight: 60
+  // }
 
   // {
   //   name: '宝塔面板',

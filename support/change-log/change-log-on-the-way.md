@@ -1,13 +1,39 @@
 Kuboard v1.0.x 的更新说明
 
 
-## v1.0.6-beta.1
 
+* 创建工作负载时，layer 不能选择默认
+
+------------------
 
 **新特性**
 
-* 工作负载编辑器 --> 容器信息 --> 挂载点 --> 支持subPathExpr
+* 增加 Grafana，并与 Kuboard 实现单点登录
+  * ServiceAccount 可以与 Grafana 单点登录
+  * OpenID Connect 账号可以与 Grafana 单点登录
+  * TeamSync （是否要实现？）
+* 
 
+
+**优化**
+
+* 去除dnsmasq，直接使用 KUBE_DNS 进行 upstream 域名解析
+
+
+**优化**
+* 容器镜像版本调整的页面里，去掉默认条件
+
+BUG
+
+
+* 显示相对时间时，kubectl 使用服务器时间计算相对时间，Kuboard 则使用客户端的机器时间计算相对时间
+* etcd 安装和备份文档
+* kubeadm 安装之后的目录结构
+
+------------------
+* 修改 metadata.labels kuboard v1.0.7
+* 支持 Headless Service
+* 在服务器端配置 openid connect 的 client_secret 以增强安全性
 
 * 日志界面支持 ctrl + F
 * 更新版本时，可以通过下拉列表选择仓库中的版本号
@@ -21,7 +47,6 @@ Kuboard v1.0.x 的更新说明
 * Limit Range
 
 * https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
-
 
 * 容器组列表，筛选结果为空时，提示筛选 “其他”
 
@@ -37,8 +62,13 @@ Kuboard v1.0.x 的更新说明
 * 存储卷声明去掉分配模式的字段
 * 删除容器组时 - graceful period
 * Pod Conditions: lastProbeTime/reason/message
-* 按名称空间查看 Events
 * 显示 Deployment/StatefulSet/DaemonSet 的事件
 * 控制台/日志界面，按 名称空间/工作负载/Pod/容器 进行切换
-* hostPort
 * StatefulSet 在 available 数与 replicas 数不一致时，链接到帮助提示
+
+
+# 用户认证相关
+
+* Gitlab
+  * GitLab 的 idtoken 中只包含 sub 字段（此处的含义为用户的ID），没有用户名和邮箱地址等信息，因此不能直接和 Kubernetes OpenID Connect 对接
+    *  https://docs.gitlab.com/ee/integration/openid_connect_provider.html#shared-information
